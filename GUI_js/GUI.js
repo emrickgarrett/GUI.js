@@ -230,22 +230,7 @@
                                 sub_anchors[sub_anchors_length].innerHTML = "<div style='width:" + li_width + "px;height:100%;padding:5px;'>" + sub_anchors[sub_anchors_length].innerHTML + "</div>";
                             }
                         }
-
-                        //Set the padding at the top of the list based on the height of the top level menu item
-                        /*
-                        var padding_amount = 0;
-
-                        if(links[0].offsetHeight < 60)
-                            padding_amount = links[0].offsetHeight/4;
-                        if(links[0].offsetHeight >= 60 && links[0].offsetHeight < 120){
-                            padding_amount = links[0].offsetHeight/3;
-                        }
-                        if(links[0].offsetHeight >= 120)
-                            padding_amount = links[0].offsetHeight/2;
-
-                        //alert(padding_amount);
-
-                        sub_links[0].style.paddingTop = padding_amount +"px";*/
+                        
                     }
                 }
             }
