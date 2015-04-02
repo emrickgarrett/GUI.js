@@ -64,7 +64,7 @@
                 primaryTextColor = "white";
                 secondaryTextColor = "white";
                 borderRadius = "5px";
-                border = "1px solid white";
+                border = "0";
                 animated = false;
                 animate_time = "0";
                 textDecoration = "none";
@@ -179,17 +179,19 @@
                         sub_menu[0].style.position = "absolute";
 
                         //Calculate the top pixels needed to make the dropdown look right
-                        var padding_amount = 0;
+                        var padding_amount = links[0].offsetHeight/2;
 
                         if(links[0].offsetHeight < 60)
-                            padding_amount = links[0].offsetHeight;
+                            padding_amount = links[0].offsetHeight/2;
                         if(links[0].offsetHeight >= 60 && links[0].offsetHeight < 120){
-                            padding_amount = links[0].offsetHeight;
+                            padding_amount = links[0].offsetHeight/2;
                         }
                         if(links[0].offsetHeight >= 120)
-                            padding_amount = links[0].offsetHeight;
+                            padding_amount = links[0].offsetHeight/2;
 
-                        sub_menu[0].style.top = padding_amount +"px";//"100%";
+                        alert(padding_amount);
+
+                        sub_menu[0].style.top = padding_amount + 4 +"px";//"100%";
                         sub_menu[0].style.left = links[0].style.margin.substring(links[0].style.margin.lastIndexOf(" "), links[0].style.margin.length);
                         sub_menu[0].style.zIndex = "-1";
                         sub_menu[0].style.padding = "5px 0px";
@@ -220,7 +222,7 @@
 
                             //Size the li items by filling the <a> with a div as large as the total area
                             while(sub_anchors_length--){
-                                sub_anchors[sub_anchors_length].style.marginRight = dropdown_margin;
+                                sub_anchors[sub_anchors_length].style.margin = dropdown_margin;
                                 sub_anchors[sub_anchors_length].style.padding = dropdown_padding;
                                 sub_anchors[sub_anchors_length].style.color = dropdown_primaryTextColor;
                                 sub_anchors[sub_anchors_length].style.border = dropdown_border;
