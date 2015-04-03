@@ -35,14 +35,15 @@
         createGui: function (data) {
             var length = this.length;
 
-            var primaryColor = "blue";
-            var secondaryColor = "red";
+            var primaryColor = "red";
+            var secondaryColor = "blue";
             var primaryTextColor = "white";
             var secondaryTextColor = "white";
             var borderRadius = "0.5em";
             var border = "none";
             var animated = false;
             var animate_time = "0";
+            var animate_type = "hover_colorChange";
             var textDecoration = "none";
             var padding = "1em";
             var margin = "0 0 0 .5em";
@@ -59,14 +60,15 @@
 
             //Things that can be currently changed depending on the JSON passed in
             if(this.guiType == ".gui-top-basic") {
-                primaryColor = "blue";
-                secondaryColor = "red";
+                primaryColor = "red";
+                secondaryColor = "blue";
                 primaryTextColor = "white";
                 secondaryTextColor = "white";
                 borderRadius = "5px";
                 border = "0";
                 animated = false;
                 animate_time = "0";
+                animate_type = "hover_colorChange";
                 textDecoration = "none";
                 padding = "1em";
                 margin = "0 0 0 0";
@@ -143,6 +145,9 @@
                 if(data.dropdown_padding != null){
                     dropdown_padding = data.dropdown_padding;
                 }
+                if(data.animate_type != null){
+                    animate_type = data.animate_type;
+                }
 
 
             }catch(Exception){
@@ -157,11 +162,12 @@
                 var btns = ul[0].getElementsByTagName("li");
                 var btns_length = btns.length;
 
+                if(animated){
+                    createAnimatedMenu(this.guiType, secondaryColor, secondaryTextColor, dropdown_secondaryColor, dropdown_secondaryTextColor, animate_time, animate_type);
+                }
                 while(btns_length--){
 
-                    if(animated){
 
-                    }
                     //Apply user styling to the top level links
                     var links = btns[btns_length].getElementsByTagName("a");
                     links[0].style.textDecoration = textDecoration;
@@ -181,15 +187,7 @@
                         //Calculate the top pixels needed to make the dropdown look right
                         var padding_amount = links[0].offsetHeight/2;
 
-                        if(links[0].offsetHeight < 60)
-                            padding_amount = links[0].offsetHeight/2;
-                        if(links[0].offsetHeight >= 60 && links[0].offsetHeight < 120){
-                            padding_amount = links[0].offsetHeight/2;
-                        }
-                        if(links[0].offsetHeight >= 120)
-                            padding_amount = links[0].offsetHeight/2;
-
-                        alert(padding_amount);
+                        //alert(padding_amount);
 
                         sub_menu[0].style.top = padding_amount + 4 +"px";//"100%";
                         sub_menu[0].style.left = links[0].style.margin.substring(links[0].style.margin.lastIndexOf(" "), links[0].style.margin.length);
@@ -199,7 +197,7 @@
 
                         var sub_links = sub_menu[0].getElementsByTagName("li");
                         var sub_link_length = sub_links.length;
-
+                        //TODO fix widths of elements, in the example you can see the bottom two are slightly longer. Find out why.
                         while(sub_link_length--){
                             var li_width = sub_links[sub_link_length].offsetWidth;
 
@@ -230,7 +228,7 @@
                                 sub_anchors[sub_anchors_length].innerHTML = "<div style='width:" + li_width + "px;height:100%;padding:5px;'>" + sub_anchors[sub_anchors_length].innerHTML + "</div>";
                             }
                         }
-                        
+
                     }
                 }
             }
@@ -244,3 +242,33 @@
         window.GUI = GUI;
     }
 })();
+
+
+/*
+//Create an animated menu by using OnHover css that has cross-browser compatibility (Of course not < IE8)
+//This does it for both the upper level menus, and the sub menus. Perhaps change this at some point?
+ */
+function createAnimatedMenu(ul, secondaryColor, secondaryTextColor, dropdown_secondaryColor, dropdown_secondaryTextColor, animate_time, animate_type){
+    switch(animate_type){
+        case "hover_colorChange":
+            var style;
+            var css = ul + " a:hover{ background: " + secondaryColor + "!important;}";
+            css += ".sub-menu a:hover{ background: " + dropdown_secondaryColor + "!important;}";
+            css += ".sub-menu div:hover{ background: " + dropdown_secondaryColor + "!important;}";
+            css += ".sub-menu li:hover{ background: " + dropdown_secondaryColor + "!important;}";
+            style = document.createElement('style');
+            style.setAttribute('type', 'text/css');
+            style.rel = "stylesheet";
+            style.title = "hover_colorChange";
+            if(style.stylesheet)
+                style.stylesheet.cssText = css;
+            else
+                style.appendChild(document.createTextNode(css));
+            document.getElementsByTagName("head")[0].appendChild(style);
+            alert(document.getElementsByTagName("head")[0].innerHTML);
+        return true;
+        default:
+            alert("it was default");
+            return false;
+    }
+}
