@@ -197,14 +197,22 @@
 
                         var sub_links = sub_menu[0].getElementsByTagName("li");
                         var sub_link_length = sub_links.length;
+
+                        //Get the max width of all the list elements so they are equal sizes
+                        var max_li_width = 0;
+                        var loop_it = sub_link_length;
+                        while(loop_it--){
+                            if(sub_links[loop_it].offsetWidth > max_li_width)
+                                max_li_width = sub_links[loop_it].offsetWidth;
+                        }
+
+
                         //TODO fix widths of elements, in the example you can see the bottom two are slightly longer. Find out why.
                         while(sub_link_length--){
-                            var li_width = sub_links[sub_link_length].offsetWidth;
 
                             //TODO apply user selected styling to the sub_menu dropdown
                             sub_links[sub_link_length].style.display = "block";
-                            sub_links[sub_link_length].style.overflow = "visible";
-                            sub_links[sub_link_length].style.width = "100%";
+                            sub_links[sub_link_length].style.width = max_li_width;
                             sub_links[sub_link_length].style.marginTop = 0;
                             sub_links[sub_link_length].style.background = dropdown_primaryColor;
                             sub_links[sub_link_length].style.padding = "0 .5em";
@@ -225,7 +233,7 @@
                                 sub_anchors[sub_anchors_length].style.color = dropdown_primaryTextColor;
                                 sub_anchors[sub_anchors_length].style.border = dropdown_border;
                                 sub_anchors[sub_anchors_length].style.borderRadius = dropdown_borderRadius;
-                                sub_anchors[sub_anchors_length].innerHTML = "<div style='width:" + li_width + "px;height:100%;padding:5px;'>" + sub_anchors[sub_anchors_length].innerHTML + "</div>";
+                                sub_anchors[sub_anchors_length].innerHTML = "<div style='width:" + max_li_width + "px;height:100%;padding:5px;'>" + sub_anchors[sub_anchors_length].innerHTML + "</div>";
                             }
                         }
 
@@ -265,7 +273,6 @@ function createAnimatedMenu(ul, secondaryColor, secondaryTextColor, dropdown_sec
             else
                 style.appendChild(document.createTextNode(css));
             document.getElementsByTagName("head")[0].appendChild(style);
-            alert(document.getElementsByTagName("head")[0].innerHTML);
         return true;
         default:
             alert("it was default");
