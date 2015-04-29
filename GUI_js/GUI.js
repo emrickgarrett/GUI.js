@@ -295,7 +295,6 @@ Menu_Items: []
 function addJS_Menu(menu, submenu){
 
 	menu.id = "top_level_menu_item_" + JS_Menu.Menu_Items.length;
-	JS_Menu.Menu_Items[JS_Menu.Menu_Items.length] = {Object: menu, SubMenu: submenu};
 
 	//Going to hide the elements because they shouldn't be visible upon first loading page...
 	for(var i = 0; i < submenu.length; i++){
@@ -304,6 +303,7 @@ function addJS_Menu(menu, submenu){
 		}
 		$("#" + submenu[i].id).hide();
 	}
+	JS_Menu.Menu_Items[JS_Menu.Menu_Items.length] = {Object: menu, SubMenu: submenu};
 
 	$("#" + menu.id).hover(function(){
 		hideAll();
