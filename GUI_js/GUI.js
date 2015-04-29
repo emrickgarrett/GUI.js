@@ -181,6 +181,7 @@
                     //If there is a sublist...
                     var sub_menu = btns[btns_length].getElementsByClassName("sub-menu");
                     if(sub_menu.length){
+
                         //We are only doing a max of one sub menu depth atm
                         sub_menu[0].style.position = "absolute";
 
@@ -237,7 +238,12 @@
                             }
                         }
 
-                    }
+			//Add JS_Menu hover effects...
+			addJS_Menu(links[0], sub_menu);
+
+                    }else{
+			addJS_Menu(links[0], []);
+			}
                 }
             }
             return this;
@@ -279,3 +285,48 @@ function createAnimatedMenu(ul, secondaryColor, secondaryTextColor, dropdown_sec
             return false;
     }
 }
+
+//Here is a Javascript Object that will hold all the elements, as well as the hover element, needed to display the sub-menus...
+
+var JS_Menu = {
+Menu_Items: []
+};
+
+function addJS_Menu(menu, submenu){
+
+	menu.id = "top_level_menu_item_" + JS_Menu.Menu_Items.length;
+	JS_Menu.Menu_Items[JS_Menu.Menu_Items.length] = {Object: menu, SubMenu: submenu};
+
+	//Going to hide the elements because they shouldn't be visible upon first loading page...
+	for(var i = 0; i < submenu.length; i++){
+		if(submenu[i].id == ""){
+			submenu[i].id = menu.id + "_sub_menu" + i;	
+		}
+		$("#" + submenu[i].id).hide();
+	}
+
+	$("#" + menu.id).hover(function(){
+		hideAll();
+		for(var i = 0; i < submenu.length; i++){
+			$("#" + submenu[i].id).show();
+					
+		}
+
+	});
+
+	$(".gui").mouseleave(function(){
+		for(var i = 0; i < submenu.length; i++){
+			$("#" + submenu[i].id).hide();
+		}
+	});
+	
+}
+
+function hideAll(){
+	for(var i = 0; i < JS_Menu.length; i++){
+		for(var j = 0; j < JS_Menu[i].Menu_Items.length; j++){
+			$("#" + JS_Menu[i].Menu_Items[j].id).hide();
+		}	
+	}
+}
+
