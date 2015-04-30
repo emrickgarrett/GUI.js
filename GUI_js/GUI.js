@@ -192,7 +192,7 @@
 
                         sub_menu[0].style.top = padding_amount + 4 +"px";//"100%";
                         sub_menu[0].style.left = links[0].style.margin.substring(links[0].style.margin.lastIndexOf(" "), links[0].style.margin.length);
-                        sub_menu[0].style.zIndex = "-1";
+                        sub_menu[0].style.zIndex = "2";
                         sub_menu[0].style.padding = "5px 0px";
                         sub_menu[0].style.width = "100px";
 
